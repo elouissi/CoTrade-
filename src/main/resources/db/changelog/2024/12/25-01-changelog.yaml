@@ -1,0 +1,303 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1735162784813-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_address
+                  name: id
+                  type: UUID
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: city_id
+                  type: UUID
+            tableName: address
+  - changeSet:
+      id: 1735162784813-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_appuser
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+            tableName: app_user
+  - changeSet:
+      id: 1735162784813-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_category
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: category
+  - changeSet:
+      id: 1735162784813-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: category_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: sub_categories_id
+                  type: UUID
+            tableName: category_sub_categories
+  - changeSet:
+      id: 1735162784813-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_city
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: city
+  - changeSet:
+      id: 1735162784813-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_message
+                  name: id
+                  type: UUID
+              - column:
+                  name: body
+                  type: VARCHAR(255)
+              - column:
+                  name: attachment
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_read
+                  type: BOOLEAN
+              - column:
+                  name: user_id
+                  type: UUID
+            tableName: message
+  - changeSet:
+      id: 1735162784813-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_photo
+                  name: id
+                  type: UUID
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: file_path
+                  type: VARCHAR(255)
+              - column:
+                  name: post_id
+                  type: UUID
+            tableName: photo
+  - changeSet:
+      id: 1735162784813-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_post
+                  name: id
+                  type: UUID
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: category
+                  type: VARCHAR(255)
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  name: user_id
+                  type: UUID
+            tableName: post
+  - changeSet:
+      id: 1735162784813-9
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_subcategory
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: category_id
+                  type: UUID
+            tableName: sub_category
+  - changeSet:
+      id: 1735162784813-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: sub_categories_id
+            constraintName: uc_category_sub_categories_subcategories
+            tableName: category_sub_categories
+  - changeSet:
+      id: 1735162784813-11
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: city_id
+            baseTableName: address
+            constraintName: FK_ADDRESS_ON_CITY
+            referencedColumnNames: id
+            referencedTableName: city
+  - changeSet:
+      id: 1735162784813-12
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: message
+            constraintName: FK_MESSAGE_ON_USER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1735162784813-13
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: photo
+            constraintName: FK_PHOTO_ON_POST
+            referencedColumnNames: id
+            referencedTableName: post
+  - changeSet:
+      id: 1735162784813-14
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: post
+            constraintName: FK_POST_ON_USER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1735162784813-15
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: sub_category
+            constraintName: FK_SUBCATEGORY_ON_CATEGORY
+            referencedColumnNames: id
+            referencedTableName: category
+  - changeSet:
+      id: 1735162784813-16
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: category_sub_categories
+            constraintName: fk_catsubcat_on_category
+            referencedColumnNames: id
+            referencedTableName: category
+  - changeSet:
+      id: 1735162784813-17
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: sub_categories_id
+            baseTableName: category_sub_categories
+            constraintName: fk_catsubcat_on_sub_category
+            referencedColumnNames: id
+            referencedTableName: sub_category
+
