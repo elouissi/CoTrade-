@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
+import {FlowbiteService} from "../services/flowbite.service";
 // import {RouterLink} from "@angular/router";
 
 
@@ -16,6 +17,10 @@ import {RouterLink} from "@angular/router";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  constructor(private flowbiteService: FlowbiteService) {
+  }
+
+
   jumbotronExample: any;
 
 }

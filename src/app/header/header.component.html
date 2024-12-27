@@ -1,46 +1,43 @@
 <header>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container-fluid">
-      <button
-        class="navbar-toggler"
-        type="button"
-        (click)="jumbotronExample.toggle()"
-        aria-controls="jumbotronExample"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-      <div
-        mdbCollapse
-        class="collapse navbar-collapse"
-        id="jumbotronExample"
-      >
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="#">Home</a>
+  <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+      <a href="https://flowbite.com" class="flex items-center">
+        <img src="data:image/jpeg;base64,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" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
+        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Hunter X Hnter</span>
+      </a>
+      <div class="flex items-center lg:order-2">
+        <a routerLink="/login" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
+        <a routerLink="/register" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Register</a>
+
+        <a href="#" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Get started</a>
+        <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+          <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+      </div>
+      <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+          <li>
+            <a href="#" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+          <li>
+            <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Company</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+          <li>
+            <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Marketplace</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+          <li>
+            <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Features</a>
+          </li>
+          <li>
+            <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Team</a>
+          </li>
+          <li>
+            <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- Navbar -->
-
-  <!-- Jumbotron -->
-  <div class="p-5 text-center bg-light">
-    <h1 class="mb-3">Heading</h1>
-    <h4 class="mb-3">Subheading</h4>
-    <a class="btn btn-primary"  routerLink="/register" role="button">Call to action</a>
-  </div>
-  <!-- Jumbotron -->
 </header>

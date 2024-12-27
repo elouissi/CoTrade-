@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
+import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -11,15 +13,26 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  username = '';
+  password = '';
+  error = '';
 
-  // @ts-ignore
-  name : string="";
-  counter:number=1;
-  acrement(){
-    this.counter ++ ;
-  }
-  deacrement(){
-    this.counter -- ;
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
+  onSubmit() {
+    // this.error = '';
+    // this.authService.register(this.username, this.password)
+    //   .subscribe({
+    //     next: () => {
+    //       this.router.navigate(['/login']);
+    //     },
+    //     error: (err) => {
+    //       this.error = 'Registration failed';
+    //       console.error('Registration error:', err);
+    //     }
+    //   });
+  }
 }
