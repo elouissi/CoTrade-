@@ -18,3 +18,5 @@ spring:
   liquibase:
     enabled: true
     change-log: db/changelog/master.yaml
+server:
+  port: 8445
