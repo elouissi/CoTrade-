@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('TRADER')")
     public ResponseEntity<PostDTO> updatePost(
             @PathVariable UUID id,
             @Valid @RequestBody PostDTO postDTO
@@ -47,9 +48,11 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Void> deletePost(@PathVariable UUID id) {
+    @PreAuthorize("hasRole('TRADER')")
+    public HashMap<String, String> deletePost(@PathVariable UUID id) {
         postService.deletePost(id);
-        return ResponseEntity.noContent().build();
+        HashMap<String,String> message = new HashMap<>();
+        message.put("message","succses");
+        return message;
     }
 }
