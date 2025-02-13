@@ -30,6 +30,5 @@ public class PostDTO {
     @NotNull(message = "L'identifiant de l'utilisateur est obligatoire")
     private UUID userId;
 
-    @NotEmpty(message = "Il doit y avoir au moins une photo")
     private List<UUID> photoIds;
 }

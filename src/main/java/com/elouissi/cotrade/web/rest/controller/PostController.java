@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/V1/posts")
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
