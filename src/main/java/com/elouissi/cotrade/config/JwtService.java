@@ -49,8 +49,8 @@ public class JwtService {
         var user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-//        extraClaims.put("role", user.getRole().name());
-//        extraClaims.put("username", user.getName());
+        extraClaims.put("role", user.getRole().name());
+        extraClaims.put("username", user.getName());
 
         return Jwts
                 .builder()
@@ -62,18 +62,6 @@ public class JwtService {
                 .compact();
     }
 
-//    private String getRole(String username) {
-//        return userRepository.findByEmail(username)
-//                .orElseThrow(() -> new RuntimeException("User not found"))
-//                .getRole()
-//                .name();
-//    }
-//
-//    private String getUsername(String username) {
-//        return userRepository.findByEmail(username)
-//                .orElseThrow(() -> new RuntimeException("User not found"))
-//                .getName();
-//    }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extracatAllClaims(token);
