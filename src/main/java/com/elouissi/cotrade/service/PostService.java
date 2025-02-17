@@ -1,6 +1,8 @@
 package com.elouissi.cotrade.service;
 
+import com.elouissi.cotrade.domain.Photo;
 import com.elouissi.cotrade.domain.Post;
+import com.elouissi.cotrade.repository.PhotoRepository;
 import com.elouissi.cotrade.repository.PostRepository;
 import com.elouissi.cotrade.service.DTO.PostDTO;
 import com.elouissi.cotrade.web.rest.VM.mapper.PostMapper;
@@ -18,11 +20,24 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final PhotoRepository photoRepository;
     private final PostMapper postMapper;
 
     public PostDTO createPost(PostDTO postDTO) {
         Post post = postMapper.toEntity(postDTO);
         Post savedPost = postRepository.save(post);
+        if (postDTO.getPhotos() != null && !postDTO.getPhotos().isEmpty()) {
+            List<Photo> photos = postDTO.getPhotos().stream()
+                    .map(photoDTO -> {
+                        Photo photo = postMapper.photoDTOToPhoto(photoDTO);
+                        photo.setPost(savedPost);
+                        return photo;
+                    })
+                    .collect(Collectors.toList());
+            photoRepository.saveAll(photos);
+            savedPost.setPhotos(photos);
+        }
+
         return postMapper.toDto(savedPost);
     }
 
@@ -41,19 +56,41 @@ public class PostService {
     }
 
     public PostDTO updatePost(UUID id, PostDTO postDTO) {
-        if (!postRepository.existsById(id)) {
-            throw new EntityNotFoundException("Post not found with id: " + id);
+        Post existingPost = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + id));
+
+        Post updatedPost = postMapper.toEntity(postDTO);
+        updatedPost.setId(id);
+
+        if (postDTO.getPhotos() != null) {
+            photoRepository.deleteByPostId(id);
+
+            List<Photo> newPhotos = postDTO.getPhotos().stream()
+                    .map(photoDTO -> {
+                        Photo photo = postMapper.photoDTOToPhoto(photoDTO);
+                        photo.setPost(updatedPost);
+                        return photo;
+                    })
+                    .collect(Collectors.toList());
+
+            photoRepository.saveAll(newPhotos);
+            updatedPost.setPhotos(newPhotos);
         }
-        postDTO.setId(id);
-        Post post = postMapper.toEntity(postDTO);
-        Post updatedPost = postRepository.save(post);
-        return postMapper.toDto(updatedPost);
+
+        Post savedPost = postRepository.save(updatedPost);
+        return postMapper.toDto(savedPost);
     }
 
     public void deletePost(UUID id) {
         if (!postRepository.existsById(id)) {
             throw new EntityNotFoundException("Post not found with id: " + id);
         }
+
+        // Supprimer d'abord les photos associées
+        photoRepository.deleteByPostId(id);
+
+        // Maintenant, supprimer le post
         postRepository.deleteById(id);
     }
+
 }
