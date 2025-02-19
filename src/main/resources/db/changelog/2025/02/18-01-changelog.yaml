@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1739887803466-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: receiver_id
+                  type: UUID
+              - column:
+                  name: sender_id
+                  type: UUID
+            tableName: message
+  - changeSet:
+      id: 1739887803466-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: receiver_id
+            baseTableName: message
+            constraintName: FK_MESSAGE_ON_RECEIVER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1739887803466-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: sender_id
+            baseTableName: message
+            constraintName: FK_MESSAGE_ON_SENDER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1739887803466-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: address
+            constraintName: fk_address_on_city
+  - changeSet:
+      id: 1739887803466-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: category_sub_categories
+            constraintName: fk_catsubcat_on_category
+  - changeSet:
+      id: 1739887803466-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: category_sub_categories
+            constraintName: fk_catsubcat_on_sub_category
+  - changeSet:
+      id: 1739887803466-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: message
+            constraintName: fk_message_on_user
+  - changeSet:
+      id: 1739887803466-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: category_sub_categories
+  - changeSet:
+      id: 1739887803466-11
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: city
+  - changeSet:
+      id: 1739887803466-12
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: city_id
+            tableName: address
+  - changeSet:
+      id: 1739887803466-13
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: user_id
+            tableName: message
+

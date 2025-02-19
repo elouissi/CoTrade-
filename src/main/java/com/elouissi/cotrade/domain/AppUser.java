@@ -30,7 +30,7 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "sender")
     private List<Message> messages;
 
     @OneToMany(mappedBy = "user")
