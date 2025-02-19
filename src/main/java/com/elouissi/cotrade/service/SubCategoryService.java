@@ -2,13 +2,16 @@ package com.elouissi.cotrade.service;
 
 import com.elouissi.cotrade.domain.SubCategory;
 import com.elouissi.cotrade.repository.SubCategoryRepository;
+import com.elouissi.cotrade.service.DTO.SubCategoryDTO;
 import com.elouissi.cotrade.web.rest.VM.mapper.CategoryMapper;
+import com.elouissi.cotrade.web.rest.VM.mapper.SubCategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -16,31 +19,42 @@ import java.util.UUID;
 public class SubCategoryService {
     private final SubCategoryRepository subCategoryRepository;
     private final CategoryService categoryService;
-    private CategoryMapper categoryMapper;
+    private final SubCategoryMapper subCategoryMapper;
 
-    public List<SubCategory> findAll() {
-        return subCategoryRepository.findAll();
+    public List<SubCategoryDTO> findAll() {
+        return subCategoryRepository.findAll()
+                .stream()
+                .map(subCategoryMapper::subCategoryToSubCategoryDTO)
+                .collect(Collectors.toList());
     }
 
-    public SubCategory findById(UUID id) {
-        return subCategoryRepository.findById(id)
+    public SubCategoryDTO findById(UUID id) {
+        SubCategory subCategory = subCategoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+        return subCategoryMapper.subCategoryToSubCategoryDTO(subCategory);
     }
 
-    public SubCategory save(SubCategory subCategory) {
-        subCategory.setCategory(categoryMapper.categoryDTOToCategory(categoryService.findById(subCategory.getCategory().getId())));
-        return subCategoryRepository.save(subCategory);
+    public SubCategoryDTO save(SubCategory subCategory) {
+        SubCategory savedSubCategory = subCategoryRepository.save(subCategory);
+        return subCategoryMapper.subCategoryToSubCategoryDTO(savedSubCategory);
     }
 
-    public SubCategory update(UUID id, SubCategory subCategory) {
-        SubCategory existingSubCategory = findById(id);
+    public SubCategoryDTO update(UUID id, SubCategory subCategory) {
+        SubCategory existingSubCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+
         existingSubCategory.setName(subCategory.getName());
         existingSubCategory.setDescription(subCategory.getDescription());
-        existingSubCategory.setCategory(categoryMapper.categoryDTOToCategory(categoryService.findById(subCategory.getCategory().getId())));
-        return subCategoryRepository.save(existingSubCategory);
+        existingSubCategory.setCategory(subCategory.getCategory());
+
+        SubCategory updatedSubCategory = subCategoryRepository.save(existingSubCategory);
+        return subCategoryMapper.subCategoryToSubCategoryDTO(updatedSubCategory);
     }
 
+    @Transactional
     public void delete(UUID id) {
-        subCategoryRepository.deleteById(id);
+        SubCategory subCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+        subCategoryRepository.delete(subCategory);
     }
 }

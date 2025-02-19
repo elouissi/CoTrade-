@@ -10,5 +10,4 @@ import java.util.UUID;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, UUID> {
-    List<Address> findByCityId(UUID cityId);
 }

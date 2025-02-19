@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class SubCategoryVM {
+public class    SubCategoryVM {
     private UUID id;
     private String name;
     private String description;

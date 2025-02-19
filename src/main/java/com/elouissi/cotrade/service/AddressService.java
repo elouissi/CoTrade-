@@ -15,15 +15,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AddressService {
     private final AddressRepository addressRepository;
-    private final CityService cityService;
 
     public List<Address> findAll() {
         return addressRepository.findAll();
     }
 
-    public List<Address> findByCityId(UUID cityId) {
-        return addressRepository.findByCityId(cityId);
-    }
+
 
     public Address findById(UUID id) {
         return addressRepository.findById(id)
@@ -31,14 +28,12 @@ public class AddressService {
     }
 
     public Address save(Address address) {
-        address.setCity(cityService.findById(address.getCity().getId()));
         return addressRepository.save(address);
     }
 
     public Address update(UUID id, Address address) {
         Address existingAddress = findById(id);
         existingAddress.setTitle(address.getTitle());
-        existingAddress.setCity(cityService.findById(address.getCity().getId()));
         return addressRepository.save(existingAddress);
     }
 

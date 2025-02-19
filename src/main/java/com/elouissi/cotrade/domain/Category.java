@@ -15,7 +15,6 @@ public class Category {
     private UUID id;
     private String name;
 
-
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SubCategory> subCategories = new ArrayList<>();
 }

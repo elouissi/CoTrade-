@@ -1,7 +1,7 @@
 package com.elouissi.cotrade.web.rest.controller;
 
 import com.elouissi.cotrade.domain.Address;
-import com.elouissi.cotrade.domain.City;
+
 import com.elouissi.cotrade.service.AddressService;
 import com.elouissi.cotrade.web.rest.VM.AddressVM;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +22,6 @@ public class AddressController {
         return ResponseEntity.ok(addressService.findAll());
     }
 
-    @GetMapping("/city/{cityId}")
-    public ResponseEntity<List<Address>> getAddressesByCity(@PathVariable UUID cityId) {
-        return ResponseEntity.ok(addressService.findByCityId(cityId));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Address> getAddress(@PathVariable UUID id) {
@@ -37,9 +33,7 @@ public class AddressController {
         Address address = new Address();
         address.setTitle(addressVM.getTitle());
 
-        City city = new City();
-        city.setId(addressVM.getCityId());
-        address.setCity(city);
+
 
         return ResponseEntity.ok(addressService.save(address));
     }
@@ -49,9 +43,7 @@ public class AddressController {
         Address address = new Address();
         address.setTitle(addressVM.getTitle());
 
-        City city = new City();
-        city.setId(addressVM.getCityId());
-        address.setCity(city);
+
 
         return ResponseEntity.ok(addressService.update(id, address));
     }
