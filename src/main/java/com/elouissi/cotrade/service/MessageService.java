@@ -22,6 +22,7 @@ public class MessageService {
     @Autowired
     private AppUserRepository userRepository;
 
+
     public MessageDTO createMessage(MessageDTO messageDTO) {
         Message message = new Message();
         message.setBody(messageDTO.getBody());
@@ -86,7 +87,7 @@ public class MessageService {
     }
 
     private MessageDTO convertToDTO(Message message) {
-        MessageDTO dto = new MessageDTO();
+        MessageDTO dto = new MessageDTO(); // Utiliser le constructeur par défaut
         dto.setId(message.getId());
         dto.setBody(message.getBody());
         dto.setAttachment(message.getAttachment());
