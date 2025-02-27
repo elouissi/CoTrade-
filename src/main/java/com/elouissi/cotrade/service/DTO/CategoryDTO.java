@@ -16,6 +16,9 @@ public class CategoryDTO {
         this.subCategories = subCategories;
     }
 
+    public CategoryDTO(UUID id, String updatedElectronics) {
+    }
+
     public UUID getId() {
         return id;
     }

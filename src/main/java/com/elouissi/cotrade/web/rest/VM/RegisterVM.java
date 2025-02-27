@@ -3,10 +3,7 @@ package com.elouissi.cotrade.web.rest.VM;
 import com.elouissi.cotrade.domain.enums.Role;
 import com.elouissi.cotrade.validation.UniqueEmail;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class RegisterVM {
 
     @NotBlank(message = "Le nom est requis")
