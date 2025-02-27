@@ -2,7 +2,6 @@ package com.elouissi.cotrade.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.UUID;
 
 @Data
@@ -16,5 +15,10 @@ public class Message {
     private boolean isRead;
 
     @ManyToOne
-    private AppUser user;
+    @JoinColumn(name = "sender_id")
+    private AppUser sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private AppUser receiver;
 }

@@ -13,6 +13,4 @@ public class Address {
     private UUID id;
     private String title;
 
-    @ManyToOne
-    private City city;
 }
