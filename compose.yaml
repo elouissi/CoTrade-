@@ -1,37 +1,12 @@
-version: '3.8'
-
 name: co_trade
+
 services:
-  app:
-    container_name: co_trade_app
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '9090:8445'
-    depends_on:
-      - postgres
-    networks:
-      - coco_trade
 
   postgres:
-    container_name: co_trade
-    image: 'postgres:17'
+    image: 'postgres:latest'
     environment:
       - 'POSTGRES_DB=co_trade'
       - 'POSTGRES_PASSWORD=admin'
       - 'POSTGRES_USER=admin'
     ports:
       - '5434:5432'
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - coco_trade
-
-volumes:
-  postgres_data:
-    driver: local
-
-networks:
-  coco_trade:
-    driver: bridge
