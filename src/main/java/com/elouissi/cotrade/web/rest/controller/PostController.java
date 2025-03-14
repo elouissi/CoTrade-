@@ -41,7 +41,6 @@ public class PostController {
         postDTO.setUserId(UUID.fromString(userId));
         System.out.println(postDTO);
 
-        // Les photos seront traitées par le service
 
         PostDTO createdPost = postService.createPost(postDTO, photos);
         return ResponseEntity.ok(createdPost);

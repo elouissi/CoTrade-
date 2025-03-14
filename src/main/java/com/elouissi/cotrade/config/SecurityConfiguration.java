@@ -64,6 +64,8 @@ public class SecurityConfiguration {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/V1/auth/**").permitAll()
+                        .requestMatchers("/api/V1/posts").permitAll()
+                        .requestMatchers("/api/V1/categories").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .anyRequest().authenticated()

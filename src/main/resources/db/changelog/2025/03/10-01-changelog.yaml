@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1741601751131-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: post_id
+                  type: UUID
+            tableName: message
+  - changeSet:
+      id: 1741601751131-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: message
+            constraintName: FK_MESSAGE_ON_POST
+            referencedColumnNames: id
+            referencedTableName: post
+

@@ -62,10 +62,8 @@ public class PostService {
         return photoFiles.stream()
                 .map(file -> {
                     try {
-                        // Générer un nom de fichier unique
                         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
-                        // Chemin où sauvegarder le fichier
                         String uploadDir = "static/uploads/";
                         Path uploadPath = Paths.get(uploadDir);
 
@@ -73,11 +71,9 @@ public class PostService {
                             Files.createDirectories(uploadPath);
                         }
 
-                        // Sauvegarder le fichier
                         Path filePath = uploadPath.resolve(fileName);
                         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-                        // Créer et sauvegarder l'entité Photo
                         Photo photo = new Photo();
                         photo.setFilePath("uploads/" + fileName);
                         photo.setTitle(fileName);

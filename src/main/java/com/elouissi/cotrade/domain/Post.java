@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,4 +28,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<Photo> photos;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Conversation> conversations = new ArrayList<>();
 }

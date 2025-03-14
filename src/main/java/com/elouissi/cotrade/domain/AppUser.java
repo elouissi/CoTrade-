@@ -31,7 +31,10 @@ public class AppUser implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "sender")
-    private List<Message> messages;
+    private List<Conversation> sentConversations;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Conversation> receivedConversations;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
