@@ -30,5 +30,5 @@ public class PostDTO {
     @NotNull(message = "L'identifiant de l'utilisateur est obligatoire")
     private UUID userId;
 
-    private List<PhotoDTO> photos;  // Changed from List<UUID> to List<PhotoDTO>
+    private List<PhotoDTO> photos;
 }

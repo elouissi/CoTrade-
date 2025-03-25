@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1741782569109-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_conversation
+                  name: id
+                  type: UUID
+              - column:
+                  name: sender_id
+                  type: UUID
+              - column:
+                  name: receiver_id
+                  type: UUID
+              - column:
+                  name: post_id
+                  type: UUID
+            tableName: conversation
+  - changeSet:
+      id: 1741782569109-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: conversation_id
+                  type: UUID
+            tableName: message
+  - changeSet:
+      id: 1741782569109-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: conversation
+            constraintName: FK_CONVERSATION_ON_POST
+            referencedColumnNames: id
+            referencedTableName: post
+  - changeSet:
+      id: 1741782569109-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: receiver_id
+            baseTableName: conversation
+            constraintName: FK_CONVERSATION_ON_RECEIVER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1741782569109-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: sender_id
+            baseTableName: conversation
+            constraintName: FK_CONVERSATION_ON_SENDER
+            referencedColumnNames: id
+            referencedTableName: app_user
+  - changeSet:
+      id: 1741782569109-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: conversation_id
+            baseTableName: message
+            constraintName: FK_MESSAGE_ON_CONVERSATION
+            referencedColumnNames: id
+            referencedTableName: conversation
+  - changeSet:
+      id: 1741782569109-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: message
+            constraintName: fk_message_on_post
+  - changeSet:
+      id: 1741782569109-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: message
+            constraintName: fk_message_on_receiver
+  - changeSet:
+      id: 1741782569109-9
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: message
+            constraintName: fk_message_on_sender
+  - changeSet:
+      id: 1741782569109-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: post_id
+            tableName: message
+        - dropColumn:
+            columnName: receiver_id
+            tableName: message
+        - dropColumn:
+            columnName: sender_id
+            tableName: message
+

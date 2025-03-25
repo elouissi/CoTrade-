@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1741914878033-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: receiver_id
+                  type: UUID
+              - column:
+                  name: sender_id
+                  type: UUID
+            tableName: message
+
