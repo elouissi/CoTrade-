@@ -6,6 +6,7 @@ import com.elouissi.cotrade.service.DTO.ConversationDTO;
 import com.elouissi.cotrade.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,12 @@ public class ConversationController {
     @GetMapping("/{id}")
     public ResponseEntity<ConversationDTO> getConversationById(@PathVariable UUID id) {
         return ResponseEntity.ok(conversationService.getConversationById(id));
+
+    }
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ConversationDTO>> getAll(){
+        return ResponseEntity.ok(conversationService.getAll());
     }
 
     @GetMapping("/user/{userId}")
@@ -48,7 +55,6 @@ public class ConversationController {
         UUID receiverId = conversationDTO.getReceiverId();
         UUID postId = conversationDTO.getPostId();
 
-//        // Prevent creating a conversation with yourself
         if (senderId.equals(receiverId)) {
             return ResponseEntity.badRequest().body("Cannot create a conversation with yourself");
         }

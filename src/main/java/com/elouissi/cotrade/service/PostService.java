@@ -1,9 +1,11 @@
 package com.elouissi.cotrade.service;
 
+import com.elouissi.cotrade.domain.AppUser;
 import com.elouissi.cotrade.domain.Photo;
 import com.elouissi.cotrade.domain.Post;
 import com.elouissi.cotrade.repository.PhotoRepository;
 import com.elouissi.cotrade.repository.PostRepository;
+import com.elouissi.cotrade.repository.UserRepository;
 import com.elouissi.cotrade.service.DTO.PostDTO;
 import com.elouissi.cotrade.web.rest.VM.mapper.PostMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private final PhotoRepository photoRepository;
+    private final UserRepository userRepository;
     private final PostMapper postMapper;
 
     public PostDTO createPost(PostDTO postDTO, List<MultipartFile> photoFiles) {
@@ -92,9 +96,17 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + id));
     }
 
+
     @Transactional(readOnly = true)
     public List<PostDTO> getAllPosts() {
         return postRepository.findAll().stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<PostDTO> getAllPostsByCreated(UUID id) {
+        Optional<AppUser> user = userRepository.findById(id);
+        return postRepository.getPostsByUser(user.get()).stream()
                 .map(postMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -129,11 +141,7 @@ public class PostService {
         if (!postRepository.existsById(id)) {
             throw new EntityNotFoundException("Post not found with id: " + id);
         }
-
-        // Supprimer d'abord les photos associées
         photoRepository.deleteByPostId(id);
-
-        // Maintenant, supprimer le post
         postRepository.deleteById(id);
     }
 

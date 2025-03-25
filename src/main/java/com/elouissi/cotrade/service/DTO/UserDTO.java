@@ -1,5 +1,6 @@
 package com.elouissi.cotrade.service.DTO;
 
+import com.elouissi.cotrade.domain.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -29,7 +30,7 @@ public class UserDTO {
     @NotBlank(message = "La localisation est obligatoire")
     private String location;
 
-    private Set<String> roles;
+    private Role role;
 
     private boolean activated;
 

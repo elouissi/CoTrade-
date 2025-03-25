@@ -2,25 +2,29 @@ package com.elouissi.cotrade.service;
 
 import com.elouissi.cotrade.config.security.SecurityUtils;
 import com.elouissi.cotrade.domain.AppUser;
+import com.elouissi.cotrade.domain.enums.Role;
+import com.elouissi.cotrade.repository.PostRepository;
 import com.elouissi.cotrade.repository.UserRepository;
 import com.elouissi.cotrade.service.DTO.UserDTO;
+import com.elouissi.cotrade.web.rest.VM.UserVM;
 import com.elouissi.cotrade.web.rest.VM.mapper.UserMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -33,6 +37,11 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + currentUserLogin));
 
         return userMapper.EntityToDto(user);
+    }
+    public List<UserVM> getAll(){
+       return userRepository.findAll()
+               .stream().map(userMapper::toVM)
+               .collect(Collectors.toList());
     }
 
     public UserDTO updateUserProfile(UserDTO userDTO) {
@@ -72,13 +81,14 @@ public class UserService {
 
         userRepository.save(user);
     }
-    /**
-     * Supprime le compte de l'utilisateur actuellement connecté.
-     * Cette opération est irréversible.
-     *
-     * @throws IllegalStateException si aucun utilisateur n'est connecté
-     * @throws EntityNotFoundException si l'utilisateur connecté n'existe pas dans la base de données
-     */
+    public void toTrader(UUID userId) {
+        AppUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("AppUser not found"));
+
+        user.setRole(Role.TRADER);
+        userRepository.save(user);
+
+    }
 
     public void deleteCurrentUserAccount() {
         String currentUserLogin = SecurityUtils.getCurrentUserLogin()
@@ -87,6 +97,7 @@ public class UserService {
         AppUser user = userRepository.findByEmail(currentUserLogin)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + currentUserLogin));
 
+        postRepository.deleteAllByUser(user);
         userRepository.delete(user);
     }
     public Optional<UserDTO> getUserById(UUID id){

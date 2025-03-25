@@ -23,23 +23,17 @@ public class UserVM {
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
             message = "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial")
     private String password;
+    private String name;
 
-    @NotBlank(message = "First name is required")
-    private String firstName;
 
-    @NotBlank(message = "Last name is required")
-    private String lastName;
 
-    @NotBlank(message = "CIN is required")
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "CIN must be alphanumeric")
-    private String cin;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank(message = "Nationality is required")
-    private String nationality;
+    private String location;
+
 
     @NotNull(message = "Role is required")
     private Role role;

@@ -15,7 +15,7 @@ public class Message {
     private String body;
     private String attachment;
     private boolean isRead;
-    private UUID senderId; // ID de l'expéditeur du message
+    private UUID senderId;
     private UUID receiverId;
 
     @ManyToOne

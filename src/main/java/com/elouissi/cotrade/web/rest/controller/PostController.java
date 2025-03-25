@@ -5,6 +5,7 @@ import com.elouissi.cotrade.service.DTO.PostDTO;
 import com.elouissi.cotrade.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -76,9 +77,16 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
+
+
     @GetMapping
     public ResponseEntity<List<PostDTO>> getAllPosts() {
         List<PostDTO> posts = postService.getAllPosts();
+        return ResponseEntity.ok(posts);
+    }
+    @GetMapping("/created/{id}")
+    public ResponseEntity<List<PostDTO>> getAllPosts(@PathVariable UUID id) {
+        List<PostDTO> posts = postService.getAllPostsByCreated(id);
         return ResponseEntity.ok(posts);
     }
 

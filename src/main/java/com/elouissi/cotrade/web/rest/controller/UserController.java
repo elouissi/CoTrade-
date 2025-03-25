@@ -4,15 +4,14 @@ import com.elouissi.cotrade.domain.AppUser;
 import com.elouissi.cotrade.service.DTO.UserDTO;
 import com.elouissi.cotrade.service.DTO.PasswordChangeDTO;
 import com.elouissi.cotrade.service.UserService;
+import com.elouissi.cotrade.web.rest.VM.UserVM;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/V1/users")
@@ -20,8 +19,13 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<UserVM>> getAll(){
+        return ResponseEntity.ok(userService.getAll());
+    }
+
     @GetMapping("/profile")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDTO> getUserProfile() {
         UserDTO userDTO = userService.getCurrentUserProfile();
         return ResponseEntity.ok(userDTO);
@@ -32,6 +36,13 @@ public class UserController {
     public ResponseEntity<UserDTO> updateUserProfile(@Valid @RequestBody UserDTO userDTO) {
         UserDTO updatedUser = userService.updateUserProfile(userDTO);
         return ResponseEntity.ok(updatedUser);
+    }
+    @PutMapping("/toTrader/{userId}")
+    public ResponseEntity<?> UpdateRole( @PathVariable UUID userId) {
+      userService.toTrader(userId);
+        Map<String,String> message = new HashMap<>();
+        message.put("message","l'user est changé");
+        return ResponseEntity.ok(message);
     }
 
     @PostMapping("/change-password")

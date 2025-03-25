@@ -9,6 +9,8 @@ import com.elouissi.cotrade.repository.AppUserRepository;
 import com.elouissi.cotrade.repository.PostRepository;
 import com.elouissi.cotrade.repository.MessageRepository;
 import com.elouissi.cotrade.service.DTO.ConversationDTO;
+import com.elouissi.cotrade.service.DTO.UserDTO;
+import com.elouissi.cotrade.web.rest.VM.mapper.ConversationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,9 @@ public class ConversationService {
 
     @Autowired
     private MessageRepository messageRepository;
+
+    @Autowired
+    private ConversationMapper conversationMapper;
 
     public ConversationDTO createConversation(ConversationDTO conversationDTO) {
         // Prevent creating a conversation with yourself
@@ -101,7 +106,6 @@ public class ConversationService {
     public List<ConversationDTO> findConversationBySenderReceiverAndPost(UUID senderId, UUID receiverId, UUID postId) {
         List<ConversationDTO> result = new ArrayList<>();
 
-        // Try to find conversation in both directions
         List<Conversation> conversations = conversationRepository.findBySenderIdAndReceiverIdAndPostId(senderId, receiverId, postId);
         conversations.addAll(conversationRepository.findBySenderIdAndReceiverIdAndPostId(receiverId, senderId, postId));
 
@@ -143,11 +147,15 @@ public class ConversationService {
             dto.setUnreadCount((int) unreadCount);
         }
 
-        // Ajouter l'image du post si disponible
         if (!conversation.getPost().getPhotos().isEmpty()) {
             dto.setPostImage(conversation.getPost().getPhotos().get(0).getFilePath());
         }
 
         return dto;
+    }
+    public List<ConversationDTO> getAll(){
+        return conversationRepository.findAll()
+                .stream().map(this::convertToDTOWithDetails)
+                .collect(Collectors.toList());
     }
 }

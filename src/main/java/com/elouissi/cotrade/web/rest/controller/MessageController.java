@@ -1,9 +1,11 @@
 package com.elouissi.cotrade.web.rest.controller;
 
 import com.elouissi.cotrade.service.DTO.MessageDTO;
+import com.elouissi.cotrade.service.DTO.UserDTO;
 import com.elouissi.cotrade.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,12 @@ public class MessageController {
     @PostMapping
     public ResponseEntity<MessageDTO> createMessage(@RequestBody MessageDTO messageDTO) {
         return ResponseEntity.ok(messageService.createMessage(messageDTO, messageDTO.getSenderId(), messageDTO.getReceiverId()));
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<MessageDTO>> getAll(){
+        return ResponseEntity.ok(messageService.getAll());
     }
 
     @GetMapping("/conversation/{conversationId}/{userId}")

@@ -45,7 +45,7 @@ class MessageServiceTest {
         receiver = new AppUser();
         receiver.setId(receiverId);
 
-        messageDTO = new MessageDTO(); // Constructeur par défaut
+        messageDTO = new MessageDTO();
         messageDTO.setBody("Hello");
 
 

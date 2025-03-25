@@ -8,7 +8,9 @@ import com.elouissi.cotrade.repository.AppUserRepository;
 import com.elouissi.cotrade.repository.ConversationRepository;
 import com.elouissi.cotrade.repository.MessageRepository;
 import com.elouissi.cotrade.repository.PostRepository;
+import com.elouissi.cotrade.service.DTO.ConversationDTO;
 import com.elouissi.cotrade.service.DTO.MessageDTO;
+import com.elouissi.cotrade.web.rest.VM.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +36,8 @@ public class MessageService {
     private ConversationRepository conversationRepository;
 
     @Autowired
-    private PostRepository postRepository;
+    private MessageMapper messageMapper;
+
 
     public MessageDTO createMessage(MessageDTO messageDTO, UUID senderId, UUID receiverId) {
         Message message = new Message();
@@ -150,6 +153,11 @@ public class MessageService {
 
         return convertToDTO(updatedMessage);
     }
+    public List<MessageDTO> getAll(){
+        return messageRepository.findAll()
+                .stream().map(messageMapper::EntityToDto)
+                .collect(Collectors.toList());
+    }
 
     private MessageDTO convertToDTO(Message message) {
         MessageDTO dto = new MessageDTO();
@@ -159,8 +167,6 @@ public class MessageService {
         dto.setRead(message.isRead());
         dto.setTime(message.getTime());
         dto.setConversationId(message.getConversation().getId());
-
-        // Ajouter les informations de l'expéditeur et du destinataire depuis la conversation
         dto.setSenderId(message.getSenderId());
         dto.setReceiverId(message.getReceiverId());
 
