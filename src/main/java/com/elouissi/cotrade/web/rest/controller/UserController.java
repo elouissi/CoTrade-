@@ -38,11 +38,11 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
     @PutMapping("/toTrader/{userId}")
-    public ResponseEntity<?> UpdateRole( @PathVariable UUID userId) {
-      userService.toTrader(userId);
-        Map<String,String> message = new HashMap<>();
-        message.put("message","l'user est changé");
-        return ResponseEntity.ok(message);
+    public ResponseEntity<Map<String, String>> updateRole(@PathVariable UUID userId) {
+        userService.toTrader(userId);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "l'user est changé");
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/change-password")
