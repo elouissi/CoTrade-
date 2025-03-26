@@ -8,9 +8,7 @@ import java.util.Optional;
 public final class SecurityUtils {
 
     private SecurityUtils() {
-        // Classe utilitaire, constructeur privé
     }
-
 
     public static Optional<String> getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -31,19 +29,6 @@ public final class SecurityUtils {
     }
 
 
-    public static boolean isAuthenticated() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null &&
-                authentication.isAuthenticated() &&
-                !(authentication.getPrincipal() instanceof String && "anonymousUser".equals(authentication.getPrincipal()));
-    }
 
-
-    public static boolean hasCurrentUserAuthority(String authority) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null &&
-                authentication.getAuthorities().stream()
-                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
-    }
 }
 
